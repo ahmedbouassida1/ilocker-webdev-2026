@@ -1,0 +1,27 @@
+/**
+ * Shortcode: [ilocker_infos]
+ * Description: Formulaire Détails du compte.
+ * Update: Suppression de la classe 'il-dashboard-card' pour corriger le layout.
+ */
+
+add_shortcode('ilocker_infos', function() {
+    if (!is_user_logged_in()) return '';
+    
+    ob_start(); ?>
+    
+    <div class="il-dashboard-card il-infos-wrapper">
+        
+        <h3 class="il-card-title">Informations Personnelles</h3>
+        <p class="il-card-desc">Mettez à jour vos coordonnées et votre mot de passe.</p>
+        
+        <div class="il-form-container">
+            <?php 
+            // Charge le formulaire WooCommerce standard
+            wc_get_template('myaccount/form-edit-account.php', array('user' => get_user_by('id', get_current_user_id()))); 
+            ?>
+        </div>
+        
+    </div>
+
+    <?php return ob_get_clean();
+});

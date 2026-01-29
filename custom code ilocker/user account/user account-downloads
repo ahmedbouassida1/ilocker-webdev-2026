@@ -1,0 +1,67 @@
+/**
+ * Shortcode: [ilocker_downloads]
+ * Description: Tableau des fichiers numériques.
+ * Fix: Passe l'ID utilisateur explicitement à wc_get_customer_available_downloads()
+ */
+
+add_shortcode('ilocker_downloads', function() {
+    if (!is_user_logged_in()) return '';
+    
+    // CORRECTION : On passe l'ID de l'utilisateur actuel
+    $downloads = wc_get_customer_available_downloads( get_current_user_id() );
+    
+    ob_start(); ?>
+    
+    <div class="il-dashboard-card" style="width: auto !important; max-width: 100% !important;">
+        <h3 class="il-card-title">Téléchargements</h3>
+        <p class="il-card-desc">Accédez à vos fichiers numériques et manuels.</p>
+        
+        <?php if ($downloads): ?>
+            <div class="il-table-responsive">
+                <table class="il-custom-table">
+                    <thead>
+                        <tr>
+                            <th>Fichier / Produit</th>
+                            <th class="il-hide-mobile">Téléchargements</th>
+                            <th class="il-hide-mobile">Expiration</th>
+                            <th style="text-align:right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($downloads as $download): ?>
+                        <tr>
+                            <td>
+                                <a href="<?php echo esc_url(get_permalink($download['product_id'])); ?>" class="il-product-link">
+                                    <?php echo esc_html($download['product_name']); ?>
+                                </a>
+                                <div class="il-file-name"><?php echo esc_html($download['download_name']); ?></div>
+                            </td>
+                            <td class="il-hide-mobile">
+                                <span class="il-badge-gray">
+                                    <?php echo is_numeric($download['downloads_remaining']) ? $download['downloads_remaining'] . ' restants' : 'Illimité'; ?>
+                                </span>
+                            </td>
+                            <td class="il-hide-mobile">
+                                <?php echo !empty($download['access_expires']) ? date('d/m/Y', strtotime($download['access_expires'])) : 'Jamais'; ?>
+                            </td>
+                            <td style="text-align:right;">
+                                <a href="<?php echo esc_url($download['download_url']); ?>" class="il-btn-download">
+                                    ⬇ Télécharger
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <div class="il-empty-state">
+                <div style="font-size:40px; margin-bottom:10px;">☁️</div>
+                <p>Aucun fichier à télécharger.</p>
+                <a href="<?php echo wc_get_page_permalink('shop'); ?>" class="il-btn-link">Parcourir la boutique</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <?php return ob_get_clean();
+});

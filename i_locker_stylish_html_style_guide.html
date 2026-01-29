@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iLocker – Full Brand & UI Style Guide</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================
+       iLocker Design Tokens (Zeplin)
+       ================================ */
+
+    :root {
+      /* ================================
+         UI Backgrounds
+         ================================ */
+      --bg-page: #f9fafb;
+      --bg-surface: #ffffff;
+      --bg-surface-alt: #f6f8f9;
+      --bg-widget: rgba(138, 138, 254, 0.03);
+      --bg-inverse: #00001a;
+
+      /* ================================
+         Text Colors
+         ================================ */
+      --text-primary: #00001a;
+      --text-secondary: #54547e;
+      --text-tertiary: #8a8aa7;
+      --text-inverse: #ffffff;
+      --text-accent: #0000fc;
+      --text-link: #00c8f5;
+      --text-link-hover: #00b4dd;
+      --text-disabled: #b0b0c3;
+
+      /* ================================
+         UI Element Colors
+         ================================ */
+      --ui-border-default: #e6e6ec;
+      --ui-border-strong: #b0b0c3;
+      --ui-divider: #f0f3f6;
+
+      --ui-primary: #0000fc;
+      --ui-primary-hover: #0000e5;
+      --ui-primary-active: #0000b3;
+
+      --ui-secondary: #f9fafb;
+      --ui-secondary-hover: #f2f4f7;
+      --ui-secondary-active: #ebeef2;
+
+      --ui-success: #2ecc71;
+      --ui-warning: #f1c40f;
+      --ui-danger: #e74c3c;
+
+      /* Accent Blue */
+      --accent-light: #e6fafe;
+      --accent-light-hover: #d9f7fe;
+      --accent-light-active: #b0eefc;
+      --accent-normal: #00c8f5;
+      --accent-normal-hover: #00b4dd;
+      --accent-normal-active: #00a0c4;
+      --accent-dark: #0096b8;
+      --accent-dark-hover: #007893;
+      --accent-dark-active: #005a6e;
+      --accent-darker: #004656;
+
+      /* iLocker Blue */
+      --ilocker-50: #eef;
+      --ilocker-100: #b0b0fe;
+      --ilocker-200: #8a8afe;
+      --ilocker-300: #5454fd;
+      --ilocker-400: #3333fd;
+      --ilocker-500: #0000fc;
+      --ilocker-600: #0000e5;
+      --ilocker-700: #0000b3;
+      --ilocker-800: #00008b;
+      --ilocker-900: #00006a;
+
+      /* Dark Blue / Neutral */
+      --neutral-50: #e6e6ec;
+      --neutral-100: #b0b0c3;
+      --neutral-200: #8a8aa7;
+      --neutral-300: #54547e;
+      --neutral-400: #333365;
+      --neutral-500: #00003f;
+      --neutral-600: #000039;
+      --neutral-700: #00002d;
+      --neutral-800: #000023;
+      --neutral-900: #00001a;
+
+      --white: #ffffff;
+      --bg-light: #f9fafb;
+
+      /* UI */
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 12px 32px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-page);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: clamp(15px, 1.1vw, 16px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 64px 24px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--ilocker-500), var(--ilocker-900));
+      color: var(--white);
+      padding: 96px 32px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 96px;
+    }
+
+    header h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    header p {
+      font-size: 18px;
+      max-width: 720px;
+      opacity: 0.95;
+    }
+
+    section { margin-bottom: 96px; }
+
+    section h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: var(--neutral-500);
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      padding: 40px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 24px;
+      color: var(--text-secondary);
+    }
+
+    /* Typography Specimens */
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .spec-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--neutral-200);
+      margin-bottom: 12px;
+    }
+
+    /* Color Grid */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+    }
+
+    .swatch {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .swatch-color { height: 120px; }
+
+    .swatch-info {
+      background: var(--white);
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+
+    ul { list-style: none; }
+
+    li {
+      padding-left: 24px;
+      position: relative;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-normal);
+      font-size: 28px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: var(--neutral-200);
+      padding-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <h1>iLocker Style Guide</h1>
+      <p>Official brand and UI specification for iLocker products, platforms, and digital experiences.</p>
+    </header>
+
+    <section>
+      <h2>1. Brand Foundation</h2>
+      <div class="card">
+        <p><strong>Brand:</strong> iLocker</p>
+        <p><strong>Slogan:</strong> Appareils intelligents pour la modernisation de votre espace</p>
+        <p><strong>Mission:</strong> Designing intelligent connected systems that enhance convenience, efficiency, and security.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Typography System</h2>
+
+      <div class="card" style="margin-bottom:32px">
+        <p>The iLocker type system is fully responsive. Sizes scale fluidly between mobile, tablet, and desktop using <code>clamp()</code>, ensuring readability and hierarchy on all screens.</p>
+      </div>
+
+      <div class="type-grid">
+        <div class="card">
+          <div class="spec-label">Brand & Display</div>
+          <p class="spec-label">Heading Mega</p>
+          <div style="font-family:Unbounded;font-size:clamp(48px,10vw,100px);font-weight:700;line-height:1">Mega</div>
+          <br />
+          <p class="spec-label">H1</p>
+          <div style="font-family:Unbounded;font-size:clamp(28px,4vw,40px);font-weight:700">H1</div>
+        </div>
+
+        <div class="card">
+          <div class="spec-label">Section Headings</div>
+          <p class="spec-label">H2</p>
+          <div style="font-size:clamp(22px,3vw,32px);font-weight:700">H2</div>
+          <p class="spec-label">H3</p>
+          <div style="font-size:clamp(20px,2.4vw,24px);font-weight:700">H3</div>
+          <p class="spec-label">H4</p>
+          <div style="font-size:clamp(18px,2vw,20px);font-weight:700">H4</div>
+        </div>
+
+        <div class="card">
+          <div class="spec-label">Subtitles</div>
+          <p class="spec-label">Subtitle 24</p>
+          <div style="font-size:clamp(20px,2.5vw,24px);font-weight:500">Subtitle Large</div>
+          <p class="spec-label">Subtitle</p>
+          <div style="font-size:clamp(16px,2vw,18px);font-weight:700">Subtitle</div>
+        </div>
+
+        <div class="card">
+          <div class="spec-label">Body Text</div>
+          <p class="spec-label">Body Large</p>
+          <div style="font-size:clamp(18px,2vw,20px)">Body Large</div>
+          <p class="spec-label">Body</p>
+          <div style="font-size:clamp(16px,1.5vw,18px);line-height:1.5">Body Default</div>
+          <p class="spec-label">Body Small</p>
+          <div style="font-size:clamp(14px,1.2vw,16px);line-height:1.4">Body Small</div>
+        </div>
+
+        <div class="card">
+          <div class="spec-label">Labels & UI</div>
+          <p class="spec-label">Label Large</p>
+          <div style="font-size:clamp(16px,1.6vw,20px);font-weight:600">Label Large</div>
+          <p class="spec-label">Label</p>
+          <div style="font-size:clamp(14px,1.4vw,18px);font-weight:600">Label</div>
+          <p class="spec-label">Label Small</p>
+          <div style="font-size:clamp(12px,1.2vw,13px);font-weight:600">Label Small</div>
+        </div>
+
+        <div class="card">
+          <div class="spec-label">Captions</div>
+          <p class="spec-label">Caption</p>
+          <div style="font-size:clamp(12px,1.2vw,13px);font-weight:500">Caption</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Color Palette</h2>
+      <div class="card">
+        <p>This palette is the official iLocker color system. All UI, branding, and product interfaces must use these tokens exclusively.</p>
+      </div>
+      <h3 style="margin-bottom:24px">iLocker Blue</h3>
+      <div class="color-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--ilocker-50)"></div><div class="swatch-info">Blue 50<br>#EEF</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ilocker-100)"></div><div class="swatch-info">Blue 100<br>#B0B0FE</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ilocker-300)"></div><div class="swatch-info">Blue 300<br>#5454FD</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ilocker-500)"></div><div class="swatch-info">Blue 500 (Primary)<br>#0000FC</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ilocker-700)"></div><div class="swatch-info">Blue 700<br>#0000B3</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ilocker-900)"></div><div class="swatch-info">Blue 900<br>#00006A</div></div>
+      </div>
+
+      <h3 style="margin:48px 0 24px">Accent Blue</h3>
+      <div class="color-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--accent-light)"></div><div class="swatch-info">Accent Light<br>#E6FAFE</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--accent-normal)"></div><div class="swatch-info">Accent Normal<br>#00C8F5</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--accent-dark)"></div><div class="swatch-info">Accent Dark<br>#0096B8</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--accent-darker)"></div><div class="swatch-info">Accent Darker<br>#004656</div></div>
+      </div>
+
+      <h3 style="margin:48px 0 24px">Neutrals</h3>
+      <div class="color-grid">
+        <div class="swatch"><div class="swatch-color" style="background:var(--neutral-50)"></div><div class="swatch-info">Neutral 50</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--neutral-200)"></div><div class="swatch-info">Neutral 200</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--neutral-300)"></div><div class="swatch-info">Neutral 300 (Text)</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--neutral-900)"></div><div class="swatch-info">Neutral 900</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Tone of Voice</h2>
+      <div class="card">
+        <ul>
+          <li>Professional, confident, and precise</li>
+          <li>Technology-first but human</li>
+          <li>Clear, structured, and educational</li>
+          <li>Security and reliability focused</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. Design Principles</h2>
+      <div class="card">
+        <ul>
+          <li>Minimalist layouts with strong visual hierarchy</li>
+          <li>Accent colors used only for actions and emphasis</li>
+          <li>Whitespace is functional, not decorative</li>
+          <li>Consistency across web, mobile, and hardware interfaces</li>
+          <li>Accessibility (contrast, size, readability) is mandatory</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. UI Components (Reference)</h2>
+      <div class="card">
+        <p><strong>Buttons</strong></p>
+        <p>Primary buttons use <code>--ui-primary</code> background with <code>--text-inverse</code> text.</p>
+        <p>Hover and active states use <code>--ui-primary-hover</code> and <code>--ui-primary-active</code>.</p>
+        <br />
+        <p><strong>Secondary Buttons</strong></p>
+        <p>Use <code>--ui-secondary</code> backgrounds with neutral borders.</p>
+        <br />
+        <p><strong>Cards & Surfaces</strong></p>
+        <p>Cards use <code>--bg-surface</code>. Widgets and panels may use <code>--bg-widget</code>.</p>
+        <br />
+        <p><strong>Text & Icons</strong></p>
+        <p>Primary text: <code>--text-primary</code><br />Secondary text: <code>--text-secondary</code><br />Disabled text: <code>--text-disabled</code></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. UI Color Usage</h2>
+      <div class="card">
+        <ul>
+          <li>Page backgrounds must use <code>--bg-page</code></li>
+          <li>Never place text directly on accent colors without sufficient contrast</li>
+          <li>Status colors (success, warning, danger) are reserved for feedback only</li>
+          <li>Inverse UI is allowed only on dark or immersive screens</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      © iLocker — Official Style Guide
+    </footer>
+
+  </div>
+
+</body>
+</html>
