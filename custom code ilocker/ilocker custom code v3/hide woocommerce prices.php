@@ -156,6 +156,13 @@ document.addEventListener('DOMContentLoaded', function () {
 			return !!el.querySelector && !!el.querySelector('.product_title');
 		}
 
+		function isShortDescNode(el) {
+			if (!el) return false;
+			if (el.classList && el.classList.contains('woocommerce-product-details__short-description')) return true;
+			if (el.classList && el.classList.contains('elementor-widget-woocommerce-product-short-description')) return true;
+			return !!el.querySelector && !!el.querySelector('.woocommerce-product-details__short-description');
+		}
+
 		function isBannerNode(el) {
 			if (!el) return false;
 			if (el === banner) return true;
@@ -167,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		var widgets = container.querySelectorAll('.elementor-widget');
 		if (widgets && widgets.length) {
 			widgets.forEach(function (w) {
-				if (isBannerNode(w) || isTitleNode(w)) return;
+				if (isBannerNode(w) || isTitleNode(w) || isShortDescNode(w)) return;
 				w.style.setProperty('display', 'none', 'important');
 			});
 		}
@@ -181,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		if (summary && summary.children) {
 			Array.prototype.forEach.call(summary.children, function (child) {
-				if (isBannerNode(child) || isTitleNode(child)) return;
+				if (isBannerNode(child) || isTitleNode(child) || isShortDescNode(child)) return;
 				child.style.setProperty('display', 'none', 'important');
 			});
 		}
@@ -200,8 +207,8 @@ JS;
 			"\n",
 			array(
 				'/* Single product (guests): replace the entire summary column with our widget */',
-				'body:not(.logged-in).single-product div.product .summary > :not(.product_title):not(.il-guest-banner),',
-				'body:not(.logged-in).single-product div.product .entry-summary > :not(.product_title):not(.il-guest-banner) {',
+				'body:not(.logged-in).single-product div.product .summary > :not(.product_title):not(.il-guest-banner):not(.woocommerce-product-details__short-description),',
+				'body:not(.logged-in).single-product div.product .entry-summary > :not(.product_title):not(.il-guest-banner):not(.woocommerce-product-details__short-description) {',
 				'\tdisplay: none !important;',
 				'}',
 				'body:not(.logged-in).single-product div.product .il-guest-banner {',
@@ -214,7 +221,6 @@ JS;
 				'body:not(.logged-in).single-product .elementor-widget-woocommerce-product-stock,',
 				'body:not(.logged-in).single-product .elementor-widget-woocommerce-product-meta,',
 				'body:not(.logged-in).single-product .elementor-widget-woocommerce-product-rating,',
-				'body:not(.logged-in).single-product .elementor-widget-woocommerce-product-short-description,',
 				'body:not(.logged-in).single-product .elementor-widget-woocommerce-product-quantity,',
 				'body:not(.logged-in).single-product .elementor-widget-woocommerce-product-variations {',
 				'\tdisplay: none !important;',
