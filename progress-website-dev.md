@@ -21,6 +21,7 @@ Project: iLocker Dev website (WordPress + Elementor + WooCommerce)
 - Extra hardening: added Elementor single-product widget selectors to hide price/add-to-cart blocks when the product template is built with Elementor (not Woo default hooks).
 - Added guest-only DOM cleanup JS on single product pages to hide WPO/options/cart/price blocks even when markup is injected in unexpected Elementor widgets.
 - Fix: scoped guest DOM cleanup to only the banner’s column/summary to avoid hiding unrelated widgets (prevented “blank product page”).
+- UI polish: ensured the guest login widget is positioned right after the product title and styled as a card (stroke + shadow).
 - Files: custom code ilocker/ilocker custom code v3/hide woocommerce prices.php, custom code ilocker/functions-astra.php, progress-website-dev.md
 - Verification: open product + shop pages while logged out and confirm no prices show; confirm option extra prices are hidden; log in and confirm prices display normally.
 

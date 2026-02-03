@@ -126,6 +126,22 @@ document.addEventListener('DOMContentLoaded', function () {
 		var banner = document.querySelector('.il-guest-banner');
 		if (!banner) return;
 
+		// Make sure the banner is placed right after the product title (Woo or Elementor).
+		var titleEl = document.querySelector('.product_title');
+		if (!titleEl) {
+			var titleWidget = document.querySelector('.elementor-widget-woocommerce-product-title');
+			if (titleWidget) {
+				titleEl = titleWidget.querySelector('.product_title') || titleWidget;
+			}
+		}
+		if (titleEl && titleEl.parentNode) {
+			// If the banner is not already right after title, move it.
+			var after = titleEl.nextElementSibling;
+			if (after !== banner) {
+				titleEl.parentNode.insertBefore(banner, after);
+			}
+		}
+
 		var container =
 			banner.closest('.elementor-column') ||
 			banner.closest('.elementor-widget-wrap') ||
@@ -246,14 +262,22 @@ JS;
 
 				'/* Guest banner styling */',
 				'body:not(.logged-in) .il-guest-banner {',
-				'\tbackground: var(--bg-light, #f9fafb);',
+				'\tbackground: #fff;',
 				'\tborder: 2px solid var(--ui-border, #e6e6ec);',
+				'\tbox-shadow: 0 14px 34px rgba(0,0,0,0.08);',
 				'\tborder-radius: var(--radius-lg, 20px);',
 				'\tpadding: 40px;',
 				'\ttext-align: center;',
 				'\tmargin-top: 20px;',
 				'\tclear: both;',
-				'\tbox-shadow: var(--shadow-soft, 0 12px 32px rgba(0,0,0,0.08));',
+				'}',
+				'body:not(.logged-in) .il-guest-banner::before {',
+				'\tcontent: "";',
+				'\tdisplay: block;',
+				'\theight: 3px;',
+				'\tborder-radius: 999px;',
+				'\tbackground: var(--ui-primary, #0000fc);',
+				'\tmargin: 0 auto 18px;',
 				'}',
 				'body:not(.logged-in) .il-guest-banner p {',
 				'\tcolor: var(--text-secondary, #54547e);',
