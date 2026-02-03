@@ -65,7 +65,7 @@ add_action(
 					echo '<a href="' . esc_url( $login_url ) . '" class="button">Se connecter</a>';
 					echo '</div>';
 				},
-				30
+				6
 			);
 		}
 
@@ -117,6 +117,15 @@ add_action(
 		$css = implode(
 			"\n",
 			array(
+				'/* Single product (guests): replace the entire summary column with our widget */',
+				'body:not(.logged-in).single-product div.product .summary > :not(.product_title):not(.il-guest-banner),',
+				'body:not(.logged-in).single-product div.product .entry-summary > :not(.product_title):not(.il-guest-banner) {',
+				'\tdisplay: none !important;',
+				'}',
+				'body:not(.logged-in).single-product div.product .il-guest-banner {',
+				'\tmargin-top: 14px;',
+				'}',
+
 				'body:not(.logged-in) .woocommerce-Price-amount,',
 				'body:not(.logged-in) .woocommerce-Price-currencySymbol,',
 				'body:not(.logged-in) .price,',
