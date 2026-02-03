@@ -482,6 +482,40 @@ body.elementor-kit-1 .il-auth-shell .il-login-mode {
 	gap: 16px;
 }
 
+/* 7) Guest Product Widget (Hide Prices) */
+body:not(.logged-in) .il-guest-banner {
+	background: #fff;
+	border: 2px solid var(--ui-border);
+	box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+	border-radius: var(--radius-lg);
+	padding: 40px;
+	text-align: center;
+	margin-top: 20px;
+	clear: both;
+}
+
+body:not(.logged-in) .il-guest-banner::before {
+	content: "";
+	display: block;
+	height: 3px;
+	border-radius: 999px;
+	background: var(--ui-primary);
+	margin: 0 auto 18px;
+}
+
+body:not(.logged-in) .il-guest-banner p {
+	color: var(--text-secondary);
+	margin: 0 0 20px;
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+	body:not(.logged-in) .il-guest-banner {
+		padding: 24px;
+	}
+}
+
 /* Hide Elementor/Woo default account tabs when using iLocker UI */
 .e-wc-account-tabs-nav {
 	display: none !important;
