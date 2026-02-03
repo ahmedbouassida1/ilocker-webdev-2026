@@ -114,6 +114,75 @@ add_action(
 			return;
 		}
 
+		// Guest-only DOM cleanup for single product pages (Elementor/WPO markup can vary).
+		if ( function_exists( 'is_product' ) && is_product() ) {
+			$js = <<<'JS'
+document.addEventListener('DOMContentLoaded', function () {
+	try {
+		if (!document.body || document.body.classList.contains('logged-in')) return;
+		if (!document.body.classList.contains('single-product')) return;
+
+		var selectors = [
+			'.wpo-options-container',
+			'.wpo-wrapper',
+			'#wpo-container',
+			'[id^="wpo"]',
+			'[id*="wpo"]',
+			'[class^="wpo"]',
+			'[class*=" wpo"]',
+			'[class^="wcpo"]',
+			'[class*=" wcpo"]',
+			'.wcpo-options',
+			'.wcpo-option',
+			'.wpo-totals-container',
+			'.wpo-total',
+			'.wpo-price',
+			'.wpo-option-price',
+			'.wpo-price-adjustment',
+			'form.cart',
+			'.quantity',
+			'.qty',
+			'.woocommerce-Price-amount',
+			'.woocommerce-Price-currencySymbol',
+			'.price',
+			'.woocommerce-variation-price'
+		];
+
+		var nodes = [];
+		selectors.forEach(function (sel) {
+			document.querySelectorAll(sel).forEach(function (el) { nodes.push(el); });
+		});
+
+		// Hide Elementor widget wrapper when possible, otherwise hide the element itself.
+		nodes.forEach(function (el) {
+			if (!el || !el.closest) return;
+			var widget = el.closest('.elementor-widget');
+			var target = widget || el;
+			target.style.setProperty('display', 'none', 'important');
+		});
+
+		// Also explicitly hide common Elementor Woo widgets if present.
+		[
+			'.elementor-widget-woocommerce-product-price',
+			'.elementor-widget-woocommerce-product-add-to-cart',
+			'.elementor-widget-woocommerce-product-quantity',
+			'.elementor-widget-woocommerce-product-variations'
+		].forEach(function (sel) {
+			document.querySelectorAll(sel).forEach(function (el) {
+				el.style.setProperty('display', 'none', 'important');
+			});
+		});
+	} catch (e) {
+		// no-op
+	}
+});
+JS;
+
+			wp_register_script( 'ilocker-guest-product-protect', '', array(), null, true );
+			wp_enqueue_script( 'ilocker-guest-product-protect' );
+			wp_add_inline_script( 'ilocker-guest-product-protect', $js );
+		}
+
 		$css = implode(
 			"\n",
 			array(
