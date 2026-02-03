@@ -216,6 +216,7 @@ if ( defined( 'ABSPATH' ) ) {
         'alerts.php',
         'ilocker-email-verification.php',
         'ilocker-otp.php',
+        'hide woocommerce prices.php',
         'custom account icon.php',
         'login form.php',
         'register form.php',

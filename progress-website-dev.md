@@ -13,6 +13,11 @@ Project: iLocker Dev website (WordPress + Elementor + WooCommerce)
 - Files: custom code ilocker/ilocker custom code v3/ilocker-otp.php, custom code ilocker/ilocker custom code v3/ilocker-css-v3.css, progress-website-dev.md
 - Verification: open `/user-account/?il_auth=otp&il_otp=...` and confirm the two secondary buttons are outlined and clearly distinct from the primary.
 
+## 2026-02-03 — Hide WooCommerce prices for guests
+- Added a guest-only price hiding module for WooCommerce: removes price HTML via filters and hides remaining price fragments via CSS, including option/add-on price snippets.
+- Files: custom code ilocker/ilocker custom code v3/hide woocommerce prices.php, custom code ilocker/functions-astra.php, progress-website-dev.md
+- Verification: open product + shop pages while logged out and confirm no prices show; confirm option extra prices are hidden; log in and confirm prices display normally.
+
 ## 2026-02-02 — Email OTP login (5 digits)
 - Added mandatory email OTP (5 digits) for every login: password is validated first, then OTP is emailed; user enters OTP to complete login and land on `/user-account/`.
 - OTP is stored hashed in a transient challenge with expiry (10 min), max attempts (5), and resend/send rate limiting (5 per 15 min per IP/user).
