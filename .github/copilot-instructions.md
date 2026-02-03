@@ -44,3 +44,10 @@ applyTo: "**"
 ## File Management
 - Keep custom features in dedicated files and include via functions.php or a plugin.
 - Use clear, consistent naming: ilocker_* for functions, shortcodes, and actions.
+
+## Project Logging (Required)
+- Maintain a running dev log in the repo root: progress-website-dev.md.
+- Before making changes, skim the latest entries to avoid regressions/duplicate work.
+- After making changes (code, config, CSS, JS), append a short entry including:
+	- Date/time, what changed, why, files touched, and any verification steps.
+	- Open issues / next steps if anything remains.

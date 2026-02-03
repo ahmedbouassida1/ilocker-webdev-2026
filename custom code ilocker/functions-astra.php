@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define Constants
  */
-define( 'ASTRA_THEME_VERSION', '4.12.0' );
+define( 'ASTRA_THEME_VERSION', '4.12.1' );
 define( 'ASTRA_THEME_SETTINGS', 'astra-settings' );
 define( 'ASTRA_THEME_DIR', trailingslashit( get_template_directory() ) );
 define( 'ASTRA_THEME_URI', trailingslashit( esc_url( get_template_directory_uri() ) ) );
@@ -202,3 +202,54 @@ require_once ASTRA_THEME_DIR . 'inc/core/markup/class-astra-markup.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-filters.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-hooks.php';
 require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
+
+// iLocker custom shortcodes (V3) loader
+if ( defined( 'ABSPATH' ) ) {
+    $ilocker_base = trailingslashit( get_stylesheet_directory() ) . 'custom code ilocker/ilocker custom code v3/';
+
+    // If you uploaded the folder into Astra parent theme (common), fall back here.
+    if ( ! is_dir( $ilocker_base ) ) {
+        $ilocker_base = trailingslashit( get_template_directory() ) . 'custom code ilocker/ilocker custom code v3/';
+    }
+
+    $ilocker_files = array(
+        'alerts.php',
+        'ilocker-email-verification.php',
+        'ilocker-otp.php',
+        'custom account icon.php',
+        'login form.php',
+        'register form.php',
+        'ilocker-password-reset.php',
+        'user-interface-v3/il-user-interface.php',
+        'ilocker-user-account.php',
+    );
+
+    foreach ( $ilocker_files as $rel ) {
+        $path = $ilocker_base . $rel;
+        if ( file_exists( $path ) ) {
+            require_once $path;
+        }
+    }
+}
+
+// iLocker consolidated CSS (no WPCode snippets)
+add_action(
+    'wp_enqueue_scripts',
+    function () {
+        $rel_path = 'custom code ilocker/ilocker custom code v3/ilocker-css-v3.css';
+
+        $css_path = trailingslashit( get_stylesheet_directory() ) . $rel_path;
+        $css_url  = trailingslashit( get_stylesheet_directory_uri() ) . $rel_path;
+
+        // Child theme fallback to Astra parent.
+        if ( ! file_exists( $css_path ) ) {
+            $css_path = trailingslashit( get_template_directory() ) . $rel_path;
+            $css_url  = trailingslashit( get_template_directory_uri() ) . $rel_path;
+        }
+
+        if ( file_exists( $css_path ) ) {
+            wp_enqueue_style( 'ilocker-v3-custom', $css_url, array(), (string) filemtime( $css_path ) );
+        }
+    },
+    20
+);

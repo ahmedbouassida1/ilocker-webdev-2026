@@ -1,0 +1,753 @@
+
+/* ========================================================================== 
+	 iLocker — Custom CSS (V3)
+
+	 Purpose:
+	 - Single place for iLocker tokens + shared UI styles.
+	 - Loaded via theme code (no WPCode snippets).
+	 - Keeps most styling scoped to iLocker components/classes.
+	 ========================================================================== */
+
+/* 1) Design Tokens */
+:root {
+	--ui-primary: #0000fc;
+	--ui-primary-hover: #0000e5;
+
+	--text-primary: #00001a;
+	--text-secondary: #54547e;
+	--text-tertiary: #8a8aa7;
+
+	--bg-page: #f9fafb;
+	--bg-surface: #ffffffd0;
+	--bg-input: #fcfdff;
+
+	--ui-border: #e6e6ec;
+	--ui-divider: #f0f3f6;
+
+	--radius-sm: 10px;
+	--radius-md: 14px;
+	--radius-lg: 20px;
+
+	--shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.08);
+
+	--font-main: 'DM Sans', sans-serif;
+	--font-head: 'Unbounded', sans-serif;
+
+	/* Legacy aliases (compat with older adjustments) */
+	--brand-blue: var(--ui-primary);
+	--brand-yellow: #ffb700;
+	--il-blue: var(--ui-primary);
+	--il-yellow: #ffb700;
+	--il-bg-light: #f8faff;
+	--il-text-dark: #1a1a1a;
+	--il-border: #eef2ff;
+	--il-radius-lg: 20px;
+	--il-radius-sm: 12px;
+	--il-shadow: 0 10px 30px rgba(0, 0, 255, 0.06);
+	--il-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 2) Auth Cards (Login/Register/Reset) */
+.il-auth-shell {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 28px 16px 48px;
+	text-align: center;
+}
+
+/* Elementor: stretch auth UI to container width */
+.elementor .il-auth-shell,
+.elementor-page .il-auth-shell,
+body.elementor-kit-1 .il-auth-shell {
+	max-width: none;
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.il-auth-content {
+	text-align: left;
+}
+
+.il-auth-tabs {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px;
+	border: 1px solid var(--ui-border);
+	border-radius: 999px;
+	background: var(--bg-surface);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.il-auth-tab {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 18px;
+	border-radius: 999px;
+	text-decoration: none;
+	font-family: var(--font-head);
+	font-weight: 800;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	color: var(--text-secondary);
+	transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.il-auth-tab:hover {
+	color: var(--ui-primary);
+	transform: translateY(-1px);
+}
+
+.il-auth-tab.active {
+	background: var(--ui-primary);
+	color: #fff;
+	box-shadow: 0 6px 14px rgba(0, 0, 252, 0.18);
+}
+
+.il-auth-shell .il-register-card,
+.il-auth-shell .il-login-mode {
+	margin: 22px auto 0;
+}
+
+.il-auth-meta {
+	margin: -8px 0 18px;
+	text-align: right;
+}
+
+.il-auth-forgot-link {
+	color: var(--ui-primary);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.il-auth-forgot-link:hover {
+	text-decoration: underline;
+}
+
+.il-auth-loading {
+	opacity: 0.65;
+	transition: opacity 0.2s ease;
+}
+
+.il-register-card,
+.il-login-mode {
+	background: var(--bg-surface);
+	border: 1px solid var(--ui-border);
+	border-radius: var(--radius-md);
+	padding: 40px;
+	box-shadow: var(--shadow-soft);
+	max-width: 520px;
+	margin: 40px auto;
+}
+
+/* Elementor: make the auth card itself full width */
+.elementor .il-auth-shell .il-register-card,
+.elementor .il-auth-shell .il-login-mode,
+.elementor-page .il-auth-shell .il-register-card,
+.elementor-page .il-auth-shell .il-login-mode,
+body.elementor-kit-1 .il-auth-shell .il-register-card,
+body.elementor-kit-1 .il-auth-shell .il-login-mode {
+	max-width: none;
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.il-input-group {
+	margin-bottom: 24px;
+}
+
+.il-input-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: var(--text-secondary);
+}
+
+/* Inputs (scoped) */
+.il-register-card input[type="text"],
+.il-register-card input[type="email"],
+.il-register-card input[type="password"],
+.il-register-card input[type="tel"],
+.il-register-card input[type="number"],
+.il-register-card select,
+.il-register-card textarea,
+.il-form-styled-wrapper input[type="text"],
+.il-form-styled-wrapper input[type="email"],
+.il-form-styled-wrapper input[type="password"],
+.il-form-styled-wrapper input[type="tel"],
+.il-form-styled-wrapper input[type="number"],
+.il-form-styled-wrapper select,
+.il-form-styled-wrapper textarea {
+	width: 100%;
+	padding: 16px 20px;
+	background-color: var(--bg-input);
+	border: 2px solid var(--ui-border);
+	border-radius: var(--radius-sm);
+	color: var(--text-primary);
+	font-size: 16px;
+	line-height: 1.5;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+	box-shadow: none;
+	min-height: 52px;
+}
+
+.il-register-card input:focus,
+.il-register-card select:focus,
+.il-register-card textarea:focus,
+.il-form-styled-wrapper input:focus,
+.il-form-styled-wrapper select:focus,
+.il-form-styled-wrapper textarea:focus {
+	border-color: var(--ui-primary);
+	background-color: #fff;
+	outline: none;
+	box-shadow: 0 0 0 4px rgba(0, 0, 252, 0.1);
+}
+
+/* Password toggle */
+.il-password-wrapper {
+	position: relative;
+}
+
+.il-pass-toggle {
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	color: var(--text-secondary);
+	z-index: 10;
+}
+
+/* Registration type selector */
+.il-type-selector {
+	display: flex;
+	gap: 15px;
+	margin-bottom: 30px;
+}
+
+.il-type-option {
+	flex: 1;
+	cursor: pointer;
+	position: relative;
+}
+
+.il-type-option input {
+	opacity: 0;
+	position: absolute;
+}
+
+.il-type-box {
+	border: 2px solid var(--ui-border);
+	border-radius: 12px;
+	padding: 15px;
+	text-align: center;
+	background: #fff;
+	transition: all 0.2s;
+	opacity: 0.85;
+}
+
+.il-type-option input:checked + .il-type-box {
+	border-color: var(--ui-primary);
+	background: #f0f0ff;
+	opacity: 1;
+	box-shadow: 0 4px 12px rgba(0, 0, 255, 0.1);
+}
+
+.il-icon-img {
+	width: 40px;
+	margin: 0 auto 8px;
+	display: block;
+}
+
+.il-label {
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+/* Strength meter */
+.il-strength-meter {
+	display: flex;
+	gap: 4px;
+	margin-top: 8px;
+	height: 4px;
+}
+
+.il-bar {
+	flex: 1;
+	background: var(--ui-border);
+	border-radius: 2px;
+}
+
+.il-bar.weak { background: #e74c3c; }
+.il-bar.medium { background: #f1c40f; }
+.il-bar.strong { background: #2ecc71; }
+
+.il-strength-text {
+	font-size: 12px;
+	margin-top: 6px;
+	text-align: right;
+	font-weight: 600;
+}
+
+/* 3) Buttons */
+.il-btn-primary,
+.il-btn-standard,
+.il-btn-outline-small,
+.il-register-card button,
+.il-register-card input[type="submit"],
+.il-form-styled-wrapper button,
+.il-form-styled-wrapper input[type="submit"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 14px 28px;
+	background: var(--ui-primary);
+	color: #fff;
+	border-radius: var(--radius-sm);
+	text-decoration: none;
+	font-family: var(--font-head);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	border: 1px solid transparent;
+	cursor: pointer;
+	transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.il-btn-primary:hover,
+.il-btn-standard:hover,
+.il-btn-outline-small:hover,
+.il-register-card button:hover,
+.il-form-styled-wrapper button:hover {
+	background: var(--ui-primary-hover);
+	transform: translateY(-1px);
+}
+
+/* Outlined secondary buttons (e.g., OTP resend/cancel) */
+.il-register-card button.il-btn-outline,
+.il-form-styled-wrapper button.il-btn-outline {
+	background: transparent;
+	color: var(--ui-primary);
+	border-color: var(--ui-primary);
+	border-width: 2px;
+	transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.il-register-card button.il-btn-outline:hover,
+.il-form-styled-wrapper button.il-btn-outline:hover {
+	background: rgba(0, 0, 252, 0.08);
+}
+
+.il-register-card button.il-btn-outline-neutral,
+.il-form-styled-wrapper button.il-btn-outline-neutral {
+	background: transparent;
+	color: var(--text-secondary);
+	border-color: var(--ui-border);
+	border-width: 2px;
+	transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.il-register-card button.il-btn-outline-neutral:hover,
+.il-form-styled-wrapper button.il-btn-outline-neutral:hover {
+	background: rgba(0, 0, 0, 0.03);
+	border-color: var(--text-secondary);
+}
+
+.il-btn-link {
+	color: var(--ui-primary);
+	text-decoration: none;
+	font-weight: 700;
+}
+
+.il-btn-link:hover {
+	text-decoration: underline;
+}
+
+.il-btn-secondary-link {
+	color: var(--text-secondary);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.il-btn-secondary-link:hover {
+	color: var(--ui-primary);
+}
+
+.il-full-width {
+	width: 100% !important;
+	display: block;
+}
+
+/* 4) Alerts (scoped) */
+.il-alert {
+	padding: 12px 16px;
+	margin-bottom: 20px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	line-height: 1.4;
+}
+
+.il-alert-icon {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.il-alert-content {
+	flex: 1;
+}
+
+.il-alert-error {
+	background-color: #fef2f2;
+	border: 1px solid #fecaca;
+	color: #991b1b;
+}
+
+.il-alert-success {
+	background-color: #ecfdf5;
+	border: 1px solid #a7f3d0;
+	color: #065f46;
+}
+
+.il-alert-info {
+	background-color: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #1e40af;
+}
+
+/* 5) Header shortcode: [ilk-account] */
+.ilk-account-wrapper {
+	display: inline-flex;
+	align-items: center;
+}
+
+.ilk-account-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+}
+
+.ilk-icon-container {
+	position: relative;
+	width: 32px;
+	height: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ilk-account-svg {
+	width: 32px;
+	height: 32px;
+	display: block;
+}
+
+.ilk-status-dot {
+	position: absolute;
+	right: 1px;
+	bottom: 1px;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: #2ecc71;
+	border: 2px solid #fff;
+}
+
+.ilk-welcome-text {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--text-primary);
+	white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+	.ilk-welcome-text {
+		display: none;
+	}
+}
+
+/* 6) Helpers */
+.il-grid-2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+/* Hide Elementor/Woo default account tabs when using iLocker UI */
+.e-wc-account-tabs-nav {
+	display: none !important;
+}
+
+/* Scope WooCommerce notices to iLocker UI */
+.il-register-card .woocommerce-error,
+.il-register-card .woocommerce-info,
+.il-register-card .woocommerce-message,
+.il-v3-container .woocommerce-error,
+.il-v3-container .woocommerce-info,
+.il-v3-container .woocommerce-message {
+	padding: 12px 16px !important;
+	margin-bottom: 20px !important;
+	border-radius: 8px !important;
+	font-size: 14px !important;
+	font-weight: 500 !important;
+}
+/* Avoid global overrides; keep full-width only for auth wrapper */
+.il-auth-shell .il-register-card,
+.il-auth-shell .il-login-mode {
+	width: 100%;
+}
+
+/* WPO (Product Options) checkbox UI */
+.wpo-field label.wpo-checkbox {
+	display: flex !important;
+	align-items: center !important;
+	padding: 18px 24px !important;
+	margin-bottom: 14px !important;
+	background-color: #f9f9ff !important;
+	border: 2px solid #eeeeff !important;
+	border-radius: 14px !important;
+	transition: all 0.25s ease-in-out !important;
+	cursor: pointer !important;
+}
+
+.wpo-field label.wpo-checkbox:has(input:checked) {
+	background-color: #ffffff !important;
+	border-color: var(--ui-primary) !important;
+	box-shadow: 0 10px 25px rgba(0, 0, 255, 0.12) !important;
+	transform: translateY(-2px) !important;
+}
+
+.wpo-checkbox-inner {
+	flex-shrink: 0 !important;
+	width: 24px !important;
+	height: 24px !important;
+	border: 2px solid #ced4da !important;
+	border-radius: 8px !important;
+	background-color: #fff !important;
+	margin-right: 18px !important;
+}
+
+input[type="checkbox"]:checked + .wpo-checkbox-inner {
+	background-color: var(--ui-primary) !important;
+	border-color: var(--ui-primary) !important;
+}
+
+.wpo-checkbox div {
+	font-size: 16px !important;
+	font-weight: 600 !important;
+	color: var(--text-primary) !important;
+}
+
+/* WPO: highlight price pill */
+.price.wpo-price-container {
+	margin-left: auto !important;
+	color: #0096b8 !important;
+	background: #e6f1ff !important;
+	padding: 6px 10px !important;
+	border-radius: 6px !important;
+	font-size: 14px !important;
+}
+
+/* WPO: image selection tiles */
+.wpo-field label.wpo-image-selection {
+	border: 2px solid #eeeeff !important;
+	border-radius: 14px !important;
+	overflow: hidden !important;
+	transition: all 0.25s ease-in-out !important;
+	padding: 8px !important;
+	background: #f9f9ff !important;
+}
+
+.wpo-field label.wpo-image-selection:has(input:checked) {
+	border-color: var(--ui-primary) !important;
+	background: #ffffff !important;
+	box-shadow: 0 8px 20px rgba(0, 0, 255, 0.12) !important;
+}
+
+/* WPO: swatches as premium circles */
+.wpo-swatch-container .wpo-swatch {
+	width: 32px !important;
+	height: 32px !important;
+	border-radius: 50% !important;
+	border: 3px solid #ffffff !important;
+	box-shadow: 0 0 0 1px #ddd !important;
+	transition: transform 0.2s ease !important;
+}
+
+.wpo-swatch-container label:has(input:checked) .wpo-swatch {
+	box-shadow: 0 0 0 3px var(--ui-primary) !important;
+	transform: scale(1.1);
+}
+
+/* WPO: numeric/text inputs */
+.wpo-field input[type="number"],
+.wpo-field input[type="text"] {
+	width: 100% !important;
+	padding: 14px 18px !important;
+	border-radius: 12px !important;
+	border: 2px solid #eee !important;
+	background-color: #fcfcfc !important;
+	font-size: 16px !important;
+	transition: all 0.3s ease !important;
+}
+
+.wpo-field input[type="number"]:focus,
+.wpo-field input[type="text"]:focus {
+	border-color: var(--ui-primary) !important;
+	background-color: #ffffff !important;
+	outline: none !important;
+	box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.05) !important;
+}
+
+/* WPO: radio tiles */
+.wpo-field label.wpo-radio {
+	display: flex !important;
+	align-items: center !important;
+	padding: 18px 24px !important;
+	margin-bottom: 12px !important;
+	background-color: #f9f9ff !important;
+	border: 2px solid #eeeeff !important;
+	border-radius: 14px !important;
+	transition: all 0.25s ease !important;
+	cursor: pointer !important;
+}
+
+.wpo-field label.wpo-radio:has(input:checked) {
+	border-color: var(--ui-primary) !important;
+	background-color: #ffffff !important;
+	box-shadow: 0 8px 20px rgba(0, 0, 255, 0.1) !important;
+}
+
+/* Specific WPO field tweak (legacy) */
+#wpo-field-34-7236 {
+	background-color: #f2f2ff !important;
+	padding: 4%;
+	border-radius: 16px;
+}
+
+/* Product page CTA button (legacy tweak) */
+.single_add_to_cart_button {
+	padding: 16px 24px !important;
+	border-radius: 4px !important;
+}
+
+/* Select2 country field fix (legacy: .country-woo wrapper) */
+.country-woo .select2-container--default .select2-selection--single {
+	height: 52px !important;
+	background-color: #ffffff !important;
+	border: 2px solid var(--ui-primary) !important;
+	border-radius: var(--il-radius-sm) !important;
+	display: block !important;
+	padding: 0 !important;
+}
+
+.country-woo .select2-selection__rendered {
+	line-height: 48px !important;
+	color: var(--il-text-dark) !important;
+	padding-left: 15px !important;
+	font-weight: 700 !important;
+	font-size: 15px !important;
+}
+
+.country-woo .select2-selection__arrow {
+	height: 48px !important;
+	top: 2px !important;
+	right: 12px !important;
+}
+
+/* iLocker scoped image tweaks (avoid global img overrides) */
+.il-auth-shell img,
+.il-v3-container img,
+.wpo-options-container img {
+	box-shadow: none !important;
+}
+
+.wpo-options-container img {
+	object-fit: contain !important;
+}
+
+/* Header account icon (legacy selector) */
+.ilk-account-wrapper img.account-icon {
+	width: 32px !important;
+	height: auto !important;
+	max-width: none !important;
+}
+
+/* Gutenberg table tweaks (legacy) */
+.wp-block-table table {
+	border-collapse: collapse;
+	border-style: none !important;
+	border-width: 0 !important;
+}
+
+.wp-block-table th,
+.wp-block-table td {
+	border-style: none !important;
+	border-width: 0 !important;
+}
+
+/* Woo layout spacing (safer than 100vw to avoid horizontal scroll) */
+.woocommerce-page .ast-woocommerce-container {
+	width: 100%;
+	max-width: none;
+	padding: 6%;
+}
+
+.woocommerce-page ul.products {
+	padding: 4%;
+}
+
+/* Legacy footer/table tweaks (site-specific selectors) */
+.footer-list {
+	height: 200px;
+}
+
+.table-footer tbody td a,
+.table-footer tbody th a {
+	font-size: 0.2rem !important;
+}
+
+#block-74 > figure > table > tbody > tr > td > a {
+	font-size: 0.9rem !important;
+	font-weight: 500;
+}
+
+#block-74 > figure > table > thead > tr {
+	text-decoration: underline;
+	text-decoration-color: #b0eefc;
+}
+
+/* Sticky cards (if used in product configurator layout) */
+.left { display: flex; flex-direction: column; }
+.card1 { position: sticky; top: 50px; z-index: 1; }
+.card2 { position: sticky; top: 100px; z-index: 2; }
+.card3 { position: sticky; top: 150px; z-index: 3; }
+.card4 { position: sticky; top: 200px; z-index: 4; }
+.card5 { position: sticky; top: 250px; z-index: 5; }
+.card6 { position: sticky; top: 300px; z-index: 6; }
+.card7 { position: sticky; top: 350px; z-index: 7; }
+.card8 { position: sticky; top: 400px; z-index: 8; }
+.card9 { position: sticky; top: 450px; z-index: 9; }
+.card10 { position: sticky; top: 500px; z-index: 10; }
+
+@media (max-width: 600px) {
+	.il-register-card,
+	.il-login-mode {
+		padding: 24px;
+		margin: 24px 16px;
+	}
+
+	.il-grid-2 {
+		grid-template-columns: 1fr;
+	}
+}
+

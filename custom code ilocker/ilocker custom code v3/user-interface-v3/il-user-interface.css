@@ -1,0 +1,509 @@
+/* ==========================================================================
+   ILOCKER DASHBOARD V3 - LAYOUT
+   ========================================================================== */
+.il-v3-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 16px;
+    align-items: flex-start;
+    font-family: var(--font-main, sans-serif);
+    position: relative;
+    min-height: 500px;
+}
+
+/* --- SIDEBAR --- */
+.il-v3-sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: #fff;
+    border: 1px solid var(--ui-border, #e1e1e6);
+    border-radius: 16px;
+    padding: 24px;
+    position: sticky;
+    top: 100px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    z-index: 10;
+}
+
+/* Nav Items */
+.il-v3-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    color: var(--text-secondary, #54547E);
+    text-decoration: none !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.il-v3-nav-item:hover, 
+.il-v3-nav-item.active {
+    background-color: #F4F4FF;
+    color: var(--ui-primary, #0000FC); /* Brand Color */
+}
+
+/* Icons */
+.il-v3-nav-icon {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2px;
+    flex-shrink: 0;
+    display: block;
+    object-fit: contain;
+}
+
+.il-v3-nav-item.active .il-v3-nav-icon {
+    stroke: var(--ui-primary, #0000FC);
+}
+
+/* Logout */
+.il-v3-nav-item.logout {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+    color: #E74C3C;
+    border-radius: 0;
+}
+.il-v3-nav-item.logout:hover {
+    background-color: transparent;
+    color: #C0392B;
+}
+
+/* --- CONTENT AREA --- */
+.il-v3-content {
+    flex-grow: 1;
+    min-width: 0;
+    background: transparent;
+    transition: opacity 0.2s ease;
+}
+
+/* Animation */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.il-v3-fade-in {
+    animation: fadeInSlide 0.4s ease-out forwards;
+}
+
+/* Titles & Common Elements */
+.il-v3-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 24px;
+    margin-bottom: 24px;
+    color: var(--text-primary, #00001A);
+    font-weight: 700;
+}
+
+/* Dashboard Cards (Welcome) */
+.il-dashboard-card {
+    background: #fff;
+    border: 1px solid var(--ui-border, #e6e6ec);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+/* Tables: make them resilient on small screens */
+.il-custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table scroll wrapper (mobile/tablet) */
+.il-table-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    display: block;
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
+}
+
+/* Elementor editor/front-end wrappers can sometimes interfere with nested scrolling */
+.elementor .il-table-scroll,
+.elementor-editor-active .il-table-scroll {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Address Rows (Reuse of previous work) */
+.il-addr-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px;
+    border: 1px solid var(--ui-border, #e6e6ec);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.il-addr-row:hover {
+    border-color: var(--ui-primary, #0000FC);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.il-circle-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--bg-page, #f9fafb);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ui-primary, #0000FC);
+    flex-shrink: 0;
+}
+
+.il-addr-details-col { flex: 1; }
+.il-addr-title { margin: 0 0 8px 0; font-size: 16px; font-weight: 700; text-transform: uppercase; font-family: 'Unbounded', sans-serif; }
+.il-addr-text { font-size: 14px; line-height: 1.6; color: var(--text-secondary, #54547E); }
+.il-addr-action-col { align-self: center; }
+
+.il-btn-edit-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 2px solid var(--ui-border, #e6e6ec);
+    border-radius: 6px;
+    color: var(--text-primary, #00001A);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+.il-btn-edit-outline:hover {
+    border-color: var(--ui-primary, #0000FC);
+    color: var(--ui-primary, #0000FC);
+    background: #fff;
+}
+
+.il-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--ui-border, #e6e6ec);
+    padding-bottom: 16px;
+}
+
+.il-btn-secondary-link {
+    color: var(--text-secondary, #54547E);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+.il-btn-secondary-link:hover { color: var(--ui-primary, #0000FC); }
+
+/* --- DASHBOARD TABLES --- */
+.il-custom-table th {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    font-weight: 600;
+}
+
+.il-custom-table td {
+    font-size: 15px;
+    color: var(--text-primary, #00001A);
+    vertical-align: middle;
+}
+
+.il-status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    background: #f0f0f0;
+    color: #666;
+}
+
+.il-status-badge.status-completed, .il-status-badge.status-active { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.il-status-badge.status-processing { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+.il-status-badge.status-on-hold { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.il-status-badge.status-cancelled, .il-status-badge.status-failed { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+/* --- BUTTONS --- */
+.il-btn-standard, 
+.button, 
+.il-btn-outline-small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background: var(--ui-primary, #0000FC);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: normal;
+}
+
+.il-btn-standard:hover, .button:hover {
+    background: #0000D0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,252,0.2);
+    color: #fff;
+}
+
+/* Outline Variant */
+.il-btn-outline-small {
+    background: transparent;
+    border: 1px solid #e1e1e6;
+    color: var(--text-primary, #00001A);
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
+.il-btn-outline-small:hover {
+    border-color: var(--ui-primary, #0000FC);
+    color: var(--ui-primary, #0000FC);
+    background: #F4F4FF;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Form Styles Override */
+.il-form-styled-wrapper form .form-row {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.il-form-styled-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary, #00001A);
+}
+
+.il-form-styled-wrapper input[type="text"], 
+.il-form-styled-wrapper input[type="email"], 
+.il-form-styled-wrapper input[type="password"],
+.il-form-styled-wrapper input[type="tel"],
+.il-form-styled-wrapper select,
+.il-form-styled-wrapper textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e1e1e6;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.il-form-styled-wrapper input:focus,
+.il-form-styled-wrapper select:focus,
+.il-form-styled-wrapper textarea:focus {
+    border-color: var(--ui-primary, #0000FC);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,0,252,0.1);
+}
+
+.il-form-styled-wrapper button[type="submit"] {
+    background: var(--ui-primary, #0000FC);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+.il-form-styled-wrapper button[type="submit"]:hover {
+    background: #0000D0;
+}
+
+.il-form-styled-wrapper fieldset {
+    border: 1px solid #eee;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+.il-form-styled-wrapper legend {
+    font-weight: 700;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+    .il-v3-container {
+        gap: 24px;
+        margin: 28px auto;
+    }
+    .il-v3-sidebar {
+        top: 80px;
+    }
+    .il-dashboard-card {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    .il-v3-container { flex-direction: column; gap: 20px; }
+    
+    .il-v3-sidebar { 
+        width: 100%; 
+        position: sticky;
+        top: 72px;
+        display: block;
+        overflow-x: auto; 
+        padding: 12px;
+        gap: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+    .il-v3-sidebar::-webkit-scrollbar { display: none; }
+
+    /* IMPORTANT: the <nav> contains the links; make it a horizontal tab bar */
+    .il-v3-sidebar nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 2px;
+    }
+    .il-v3-sidebar nav::-webkit-scrollbar { display: none; }
+    
+    .il-v3-nav-item {
+        margin-bottom: 0; 
+        white-space: nowrap;
+        background: #f9f9ff;
+        flex-shrink: 0;
+        padding: 12px 14px;
+        border: 1px solid var(--ui-border, #e6e6ec);
+        border-radius: 999px;
+    }
+
+    .il-v3-nav-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .il-v3-nav-item.logout {
+        margin-top: 0;
+        border-top: none;
+        padding-top: 12px;
+        margin-left: auto;
+        background: #fff5f5;
+        border-color: #fecaca;
+    }
+
+    .il-header-flex {
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    /* Force tables to overflow horizontally on small screens */
+    .il-table-scroll .il-custom-table {
+        /* Override inline width:100% so the table can grow wider than its container */
+        width: max-content !important;
+        min-width: 720px;
+    }
+
+    .il-table-scroll .il-custom-table th,
+    .il-table-scroll .il-custom-table td {
+        white-space: nowrap;
+    }
+
+    .il-addr-row { flex-direction: column; gap: 16px; }
+    .il-addr-action-col { width: 100%; }
+    .il-btn-edit-outline { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 600px) {
+    .il-v3-container {
+        margin: 16px auto;
+        padding: 0 12px;
+    }
+
+    .il-v3-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .il-dashboard-card {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .il-v3-sidebar {
+        border-radius: 14px;
+        padding: 10px;
+    }
+
+    .il-v3-sidebar nav {
+        gap: 6px;
+    }
+
+    .il-v3-nav-item {
+        font-size: 14px;
+        padding: 10px 12px;
+        border-radius: 999px;
+    }
+
+    /* On phones, hide icons to keep tabs compact */
+    .il-v3-nav-icon {
+        display: none;
+    }
+
+    .il-table-scroll .il-custom-table {
+        width: max-content !important;
+        min-width: 760px;
+    }
+
+    .il-table-scroll .il-custom-table th,
+    .il-table-scroll .il-custom-table td {
+        white-space: nowrap;
+    }
+
+    .il-custom-table th {
+        font-size: 12px;
+    }
+
+    .il-custom-table td {
+        font-size: 14px;
+    }
+
+    /* Make actions stack nicely on mobile */
+    .il-dashboard-card .button,
+    .il-dashboard-card .il-btn-standard,
+    .il-dashboard-card .il-btn-outline-small {
+        width: 100%;
+    }
+
+    /* But keep table buttons compact */
+    .il-custom-table td .button,
+    .il-custom-table td .il-btn-standard,
+    .il-custom-table td .il-btn-outline-small {
+        width: auto;
+    }
+
+    .il-form-styled-wrapper fieldset {
+        padding: 16px;
+    }
+}

@@ -33,16 +33,18 @@ if ( ! defined( 'ILOCKER_RESET_FROM_NAME' ) ) {
 	define( 'ILOCKER_RESET_FROM_NAME', '' );
 }
 
-function ilocker_pr_get_ip() {
-	$ip = '';
-	if ( ! empty( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
-		$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CF_CONNECTING_IP'] ) );
-	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		$ip = sanitize_text_field( wp_unslash( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] )[0] ) );
-	} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-		$ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+if ( ! function_exists( 'ilocker_pr_get_ip' ) ) {
+	function ilocker_pr_get_ip() {
+		$ip = '';
+		if ( ! empty( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
+			$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CF_CONNECTING_IP'] ) );
+		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$ip = sanitize_text_field( wp_unslash( explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] )[0] ) );
+		} elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+			$ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+		}
+		return $ip;
 	}
-	return $ip;
 }
 
 function ilocker_pr_rate_limit_key( $suffix ) {
