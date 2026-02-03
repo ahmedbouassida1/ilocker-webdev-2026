@@ -10,8 +10,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Avoid double-loading if a legacy snippet is still active somewhere.
+if ( defined( 'ILOCKER_HIDE_PRICES_GUESTS_LOADED' ) ) {
+	return;
+}
+define( 'ILOCKER_HIDE_PRICES_GUESTS_LOADED', true );
+
 function ilocker_hide_prices_for_guests_is_enabled() {
 	return ( ! is_user_logged_in() ) && ( ! is_admin() );
+}
+
+function ilocker_hide_prices_for_guests_login_url() {
+	if ( function_exists( 'ilocker_ev_user_account_url' ) ) {
+		return ilocker_ev_user_account_url();
+	}
+	return home_url( '/user-account/' );
 }
 
 function ilocker_hide_prices_for_guests_empty_html( $html ) {
@@ -29,6 +42,54 @@ add_filter( 'woocommerce_cart_item_price', 'ilocker_hide_prices_for_guests_empty
 add_filter( 'woocommerce_cart_item_subtotal', 'ilocker_hide_prices_for_guests_empty_html', 999 );
 add_filter( 'woocommerce_cart_subtotal', 'ilocker_hide_prices_for_guests_empty_html', 999 );
 add_filter( 'woocommerce_cart_totals_order_total_html', 'ilocker_hide_prices_for_guests_empty_html', 999 );
+
+// Guest protection: WPO options + quantity + cart button on product, plus archive label.
+add_action(
+	'wp',
+	function () {
+		if ( ! ilocker_hide_prices_for_guests_is_enabled() ) {
+			return;
+		}
+
+		// Product page protection.
+		if ( function_exists( 'is_product' ) && is_product() ) {
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+
+			add_action(
+				'woocommerce_single_product_summary',
+				function () {
+					$login_url = ilocker_hide_prices_for_guests_login_url();
+					echo '<div class="il-guest-banner">';
+					echo '<p>Connectez-vous pour configurer les options de ce produit et voir le prix.</p>';
+					echo '<a href="' . esc_url( $login_url ) . '" class="button">Se connecter</a>';
+					echo '</div>';
+				},
+				30
+			);
+		}
+
+		// Archives protection.
+		if ( function_exists( 'is_shop' ) && ( is_shop() || ( function_exists( 'is_product_category' ) && is_product_category() ) ) ) {
+			remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+			remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+
+			add_action(
+				'woocommerce_after_shop_loop_item_title',
+				function () {
+					echo '<span class="il-guest-reserved-label">';
+					echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+					echo '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>';
+					echo '</svg>';
+					echo '<span>Réservé aux membres</span>';
+					echo '</span>';
+				},
+				10
+			);
+		}
+	},
+	20
+);
 
 // Some themes/plugins render price-in-quantity strings in the widget cart.
 add_filter(
@@ -65,6 +126,48 @@ add_action(
 				'body:not(.logged-in) .wc-block-mini-cart__amount,',
 				'body:not(.logged-in) .wc-block-mini-cart__amount-badge {',
 				'\tdisplay: none !important;',
+				'}',
+
+				'/* Barn2 WPO / add-ons: hide option UI & totals for guests on single product */',
+				'body:not(.logged-in).single-product .wpo-options-container,',
+				'body:not(.logged-in).single-product .wpo-wrapper,',
+				'body:not(.logged-in).single-product #wpo-container,',
+				'body:not(.logged-in).single-product .wpo-field,',
+				'body:not(.logged-in).single-product .wpo-totals-container,',
+				'body:not(.logged-in).single-product .wpo-total,',
+				'body:not(.logged-in).single-product form.cart,',
+				'body:not(.logged-in).single-product .quantity,',
+				'body:not(.logged-in).single-product .qty {',
+				'\tdisplay: none !important;',
+				'}',
+
+				'/* Guest banner styling */',
+				'body:not(.logged-in) .il-guest-banner {',
+				'\tbackground: var(--bg-light, #f9fafb);',
+				'\tborder: 2px solid var(--ui-border, #e6e6ec);',
+				'\tborder-radius: var(--radius-lg, 20px);',
+				'\tpadding: 40px;',
+				'\ttext-align: center;',
+				'\tmargin-top: 20px;',
+				'\tclear: both;',
+				'\tbox-shadow: var(--shadow-soft, 0 12px 32px rgba(0,0,0,0.08));',
+				'}',
+				'body:not(.logged-in) .il-guest-banner p {',
+				'\tcolor: var(--text-secondary, #54547e);',
+				'\tmargin: 0 0 20px;',
+				'\tfont-size: 15px;',
+				'\tline-height: 1.5;',
+				'}',
+
+				'/* Archive reserved label */',
+				'body:not(.logged-in) .il-guest-reserved-label {',
+				'\tfont-size: 13px;',
+				'\tcolor: var(--text-secondary, #54547e);',
+				'\tfont-weight: 600;',
+				'\tdisplay: inline-flex;',
+				'\talign-items: center;',
+				'\tgap: 6px;',
+				'\tmargin-top: 5px;',
 				'}',
 			)
 		);
