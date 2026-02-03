@@ -132,9 +132,22 @@ add_action(
 				'body:not(.logged-in).single-product .wpo-options-container,',
 				'body:not(.logged-in).single-product .wpo-wrapper,',
 				'body:not(.logged-in).single-product #wpo-container,',
+				'body:not(.logged-in).single-product [id^="wpo"],',
+				'body:not(.logged-in).single-product [id*="wpo"],',
+				'body:not(.logged-in).single-product [class^="wpo"],',
+				'body:not(.logged-in).single-product [class*=" wpo"],',
 				'body:not(.logged-in).single-product .wpo-field,',
 				'body:not(.logged-in).single-product .wpo-totals-container,',
 				'body:not(.logged-in).single-product .wpo-total,',
+				'body:not(.logged-in).single-product .wpo-price,',
+				'body:not(.logged-in).single-product .wpo-option-price,',
+				'body:not(.logged-in).single-product .wpo-price-adjustment,',
+				'body:not(.logged-in).single-product .wcpo-options,',
+				'body:not(.logged-in).single-product .wcpo-option,',
+				'body:not(.logged-in).single-product [class^="wcpo"],',
+				'body:not(.logged-in).single-product [class*=" wcpo"],',
+				'body:not(.logged-in).single-product .barn2,',
+				'body:not(.logged-in).single-product [class*="barn2"],',
 				'body:not(.logged-in).single-product form.cart,',
 				'body:not(.logged-in).single-product .quantity,',
 				'body:not(.logged-in).single-product .qty {',
@@ -175,13 +188,21 @@ add_action(
 		// Prefer attaching to the iLocker stylesheet when present.
 		if ( wp_style_is( 'ilocker-v3-custom', 'enqueued' ) || wp_style_is( 'ilocker-v3-custom', 'registered' ) ) {
 			wp_add_inline_style( 'ilocker-v3-custom', $css );
-			return;
 		}
 
 		// Fallback: enqueue a tiny inline-only style handle.
 		wp_register_style( 'ilocker-hide-prices', false, array(), null );
 		wp_enqueue_style( 'ilocker-hide-prices' );
 		wp_add_inline_style( 'ilocker-hide-prices', $css );
+
+		// Guaranteed fallback: print the CSS in <head> even if a cache/minifier drops inline styles.
+		add_action(
+			'wp_head',
+			function () use ( $css ) {
+				echo "\n" . '<style id="ilocker-hide-prices-guests">' . $css . '</style>' . "\n";
+			},
+			99
+		);
 	},
 	25
 );
