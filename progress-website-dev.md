@@ -18,6 +18,7 @@ Project: iLocker Dev website (WordPress + Elementor + WooCommerce)
 - Extended guest protection on product pages: hides Barn2 WPO options + quantity/cart UI and shows a login banner; on shop/category archives shows a “Réservé aux membres” label.
 - Hardening: broadened Barn2/WPO selectors and added a `wp_head` CSS fallback to ensure hiding still works with caching/minification.
 - Final hardening: on single product pages for guests, hide all summary/right-column blocks except the product title and the login widget.
+- Extra hardening: added Elementor single-product widget selectors to hide price/add-to-cart blocks when the product template is built with Elementor (not Woo default hooks).
 - Files: custom code ilocker/ilocker custom code v3/hide woocommerce prices.php, custom code ilocker/functions-astra.php, progress-website-dev.md
 - Verification: open product + shop pages while logged out and confirm no prices show; confirm option extra prices are hidden; log in and confirm prices display normally.
 
