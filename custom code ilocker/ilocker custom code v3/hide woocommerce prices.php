@@ -122,65 +122,62 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (!document.body || document.body.classList.contains('logged-in')) return;
 		if (!document.body.classList.contains('single-product')) return;
 
-		var selectors = [
-			'.wpo-options-container',
-			'.wpo-wrapper',
-			'#wpo-container',
-			'[id^="wpo"]',
-			'[id*="wpo"]',
-			'[class^="wpo"]',
-			'[class*=" wpo"]',
-			'[class^="wcpo"]',
-			'[class*=" wcpo"]',
-			'.wcpo-options',
-			'.wcpo-option',
-			'.wpo-totals-container',
-			'.wpo-total',
-			'.wpo-price',
-			'.wpo-option-price',
-			'.wpo-price-adjustment',
-			'form.cart',
-			'.quantity',
-			'.qty',
-			'.woocommerce-Price-amount',
-			'.woocommerce-Price-currencySymbol',
-			'.price',
-			'.woocommerce-variation-price'
-		];
+		// Anchor to our guest banner, then only hide siblings inside the same column/summary.
+		var banner = document.querySelector('.il-guest-banner');
+		if (!banner) return;
 
-		var nodes = [];
-		selectors.forEach(function (sel) {
-			document.querySelectorAll(sel).forEach(function (el) { nodes.push(el); });
-		});
+		var container =
+			banner.closest('.elementor-column') ||
+			banner.closest('.elementor-widget-wrap') ||
+			banner.closest('.summary') ||
+			banner.closest('.entry-summary');
+		if (!container) return;
 
-		// Hide Elementor widget wrapper when possible, otherwise hide the element itself.
-		nodes.forEach(function (el) {
-			if (!el || !el.closest) return;
-			var widget = el.closest('.elementor-widget');
-			var target = widget || el;
-			target.style.setProperty('display', 'none', 'important');
-		});
+		function isTitleNode(el) {
+			if (!el) return false;
+			if (el.classList && el.classList.contains('product_title')) return true;
+			if (el.classList && el.classList.contains('elementor-widget-woocommerce-product-title')) return true;
+			return !!el.querySelector && !!el.querySelector('.product_title');
+		}
 
-		// Also explicitly hide common Elementor Woo widgets if present.
-		[
-			'.elementor-widget-woocommerce-product-price',
-			'.elementor-widget-woocommerce-product-add-to-cart',
-			'.elementor-widget-woocommerce-product-quantity',
-			'.elementor-widget-woocommerce-product-variations'
-		].forEach(function (sel) {
-			document.querySelectorAll(sel).forEach(function (el) {
-				el.style.setProperty('display', 'none', 'important');
+		function isBannerNode(el) {
+			if (!el) return false;
+			if (el === banner) return true;
+			if (el.classList && el.classList.contains('il-guest-banner')) return true;
+			return !!el.contains && el.contains(banner);
+		}
+
+		// Elementor case: hide all widgets inside the same container except title + banner.
+		var widgets = container.querySelectorAll('.elementor-widget');
+		if (widgets && widgets.length) {
+			widgets.forEach(function (w) {
+				if (isBannerNode(w) || isTitleNode(w)) return;
+				w.style.setProperty('display', 'none', 'important');
 			});
-		});
+		}
+
+		// Woo summary case: hide direct children except title + banner.
+		var summary = null;
+		if (container.matches && (container.matches('.summary') || container.matches('.entry-summary'))) {
+			summary = container;
+		} else if (container.querySelector) {
+			summary = container.querySelector('.summary, .entry-summary');
+		}
+		if (summary && summary.children) {
+			Array.prototype.forEach.call(summary.children, function (child) {
+				if (isBannerNode(child) || isTitleNode(child)) return;
+				child.style.setProperty('display', 'none', 'important');
+			});
+		}
+
 	} catch (e) {
 		// no-op
 	}
 });
 JS;
 
-			wp_register_script( 'ilocker-guest-product-protect', '', array(), null, true );
-			wp_enqueue_script( 'ilocker-guest-product-protect' );
-			wp_add_inline_script( 'ilocker-guest-product-protect', $js );
+			wp_enqueue_script( 'jquery' );
+			wp_add_inline_script( 'jquery', $js );
 		}
 
 		$css = implode(
