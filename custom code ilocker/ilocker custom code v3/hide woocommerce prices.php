@@ -126,28 +126,30 @@ document.addEventListener('DOMContentLoaded', function () {
 		var banner = document.querySelector('.il-guest-banner');
 		if (!banner) return;
 
-		// Make sure the banner is placed right after the product title (Woo or Elementor).
-		var titleEl = document.querySelector('.product_title');
-		if (!titleEl) {
-			var titleWidget = document.querySelector('.elementor-widget-woocommerce-product-title');
-			if (titleWidget) {
-				titleEl = titleWidget.querySelector('.product_title') || titleWidget;
-			}
-		}
-		if (titleEl && titleEl.parentNode) {
-			// If the banner is not already right after title, move it.
-			var after = titleEl.nextElementSibling;
-			if (after !== banner) {
-				titleEl.parentNode.insertBefore(banner, after);
-			}
-		}
-
 		var container =
 			banner.closest('.elementor-column') ||
 			banner.closest('.elementor-widget-wrap') ||
 			banner.closest('.summary') ||
 			banner.closest('.entry-summary');
 		if (!container) return;
+
+		// Place the banner at the end of the visible block: after short description if possible,
+		// otherwise after title (Woo or Elementor).
+		var shortDescAnchor =
+			container.querySelector('.elementor-widget-woocommerce-product-short-description') ||
+			container.querySelector('.woocommerce-product-details__short-description');
+
+		var titleAnchor =
+			container.querySelector('.elementor-widget-woocommerce-product-title') ||
+			container.querySelector('.product_title');
+
+		var anchor = shortDescAnchor || titleAnchor;
+		if (anchor && anchor.parentNode) {
+			var after = anchor.nextElementSibling;
+			if (after !== banner) {
+				anchor.parentNode.insertBefore(banner, after);
+			}
+		}
 
 		function isTitleNode(el) {
 			if (!el) return false;

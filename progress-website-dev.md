@@ -1,3 +1,4 @@
+- 2026-02-03: Guest product page: reposition login widget to the end of the visible summary block (after short description when present, fallback after title). Files: custom code ilocker/ilocker custom code v3/hide woocommerce prices.php.
 - 2026-02-03: Guest product page: keep short description visible (don’t hide `.woocommerce-product-details__short-description`), updated CSS + scoped JS allowlist. Files: custom code ilocker/ilocker custom code v3/hide woocommerce prices.php.
 # progress-website-dev.md
 
