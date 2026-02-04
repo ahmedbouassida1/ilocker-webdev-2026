@@ -444,7 +444,7 @@ function il_user_interface_render_nav($current_view) {
         </a>
 
         <!-- LOGOUT -->
-        <a href="<?php echo wp_logout_url(home_url()); ?>" class="il-v3-nav-item logout">
+        <a href="<?php echo esc_url( wp_logout_url( home_url( '/user-account/?loggedout=1' ) ) ); ?>" class="il-v3-nav-item logout">
             <?php echo $icon(
                 ['logout.svg', 'deconnexion.svg', 'signout.svg'],
                 '<svg class="il-v3-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>'
@@ -572,7 +572,7 @@ function il_user_interface_render_orders() {
         $orders = wc_get_orders($args);
 
         if (!$orders || empty($orders->orders)) {
-            echo '<div class="il-dashboard-card il-v3-fade-in"><p style="margin-bottom:20px;">Vous n\'avez passé aucune commande pour le moment.</p><a href="'. wc_get_page_permalink('shop') .'" class="button">Commencer le shopping</a></div>';
+            echo '<div class="il-dashboard-card il-v3-fade-in"><p style="margin-bottom:20px;">Vous n\'avez passé aucune commande pour le moment.</p><a href="' . esc_url( home_url( '/produit/' ) ) . '" class="button">Parcourir les produits</a></div>';
         } else {
             ?>
             <div class="il-dashboard-card il-v3-fade-in" style="padding:0;">

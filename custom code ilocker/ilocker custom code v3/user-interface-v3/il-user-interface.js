@@ -133,6 +133,16 @@ jQuery(document).ready(function($) {
         ilV3LoadByUrl(a.getAttribute('href'), { push: true });
     }, true);
 
+    // Logout must always perform a real navigation (no AJAX, no intermediate confirmation).
+    document.addEventListener('click', function(e) {
+        var a = e.target && e.target.closest ? e.target.closest('#il-v3-wrapper .il-v3-sidebar a.il-v3-nav-item.logout') : null;
+        if (!a) return;
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        e.stopPropagation();
+        e.preventDefault();
+        window.location.assign(a.getAttribute('href'));
+    }, true);
+
     // Handle Browser Back/Forward Buttons
     window.onpopstate = function() {
         // Load the previous/next state via AJAX (no full refresh).
