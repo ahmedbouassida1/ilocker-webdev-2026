@@ -459,6 +459,15 @@ function il_user_interface_render_nav($current_view) {
  * VIEW: Dashboard (Overview)
  */
 function il_user_interface_render_dashboard() {
+    $template_shortcode = '[elementor-template id="5683"]';
+    $template_html      = do_shortcode( $template_shortcode );
+
+    // If Elementor (or the shortcode) isn't available, do_shortcode returns the original shortcode string.
+    if ( is_string( $template_html ) && trim( $template_html ) !== '' && trim( $template_html ) !== $template_shortcode ) {
+        echo $template_html;
+        return;
+    }
+
     $user = wp_get_current_user();
     // Fix Name Display: Prefer First Name > Display Name > Login
     $name = !empty($user->first_name) ? $user->first_name : $user->display_name;
